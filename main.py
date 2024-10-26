@@ -14,7 +14,14 @@ def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDela
 
     #判定是否完成
     while(res!=0):
-        if res<0:  #如果有错，直接退出
+
+        if res<-20000 and res>-30000:   # 如果有错，但是中国不存在，错误
+            logging.error("中国不存在发生，重启")
+            new_startpage = abs(res)-20000
+            res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, new_startpage)
+            continue
+
+        elif res<0:  #如果有其他报错，直接退出
             break
 
         elif res>0:  #返回值>0，说明要重新执行第res页，因此重新执行
@@ -83,8 +90,12 @@ Tasks_List.append(task9)
 #----------- 系统基础设置
 SetBaseDelayTm = 3  # 基础延时时间
 SetBaseFolder = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
-SetChromePath = "C:/Users/Administrator/Desktop/sun04/pachong3/chromedriver_win64/chromedriver.exe"
+SetChromePath = "C:/Users/Administrator/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
 SetLogPath = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
+# SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
+# SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
+# SetLogPath = "C:/Users/bobby/Desktop/sun04/SaveImg/"
+
 
 #---------- 自动设置日志
 LogName = SetLogPath+"Log_"+datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".log"

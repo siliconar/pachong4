@@ -129,32 +129,71 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDel
     # time.sleep(SetBaseDelayTm)
 
     #地点选择
-    btn_Pos = driver.find_element(By.XPATH,
-                                  "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[2]")  # 点选位置框
-
-    btn_area3s = btn_Pos.find_elements(By.TAG_NAME, "a")  # 找到位置选择菜单
-
-    b_china = False
-    for e_text in btn_area3s:
-
-        btn_span = e_text.find_element(By.TAG_NAME, "span")  # 找到位置选择菜单
-        span_html = btn_span.get_attribute("outerHTML")
-        print(span_html)
-
-        if "中国" in span_html:
-            e_text.click()
-            b_china = True
-            break
-        else:
-            continue
-
-    if b_china == False:
-        print("Error:中国地区不存在")
-        driver.close()
-        return -1
+    ## 先点击一下
+    btn_Pos_input = driver.find_element(By.XPATH,
+                                  "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]")  # 位置输入框
+    btn_Pos_input.click()
+    time.sleep(SetBaseDelayTm)
+    ## 然后输入2次中国，在不同层级
+    btn_Pos_input_real = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]/div/div[2]/div[1]/input")  # 找到位置选择菜单
+    btn_Pos_input_real.send_keys("中国")
+    btn_Pos_input_real = btn_Pos_input.find_element(By.TAG_NAME, "input")  # 找到位置选择菜单
+    btn_Pos_input_real.send_keys("中国")
 
     time.sleep(SetBaseDelayTm)
 
+    ## 在下拉菜单中，找到中国
+    btn_Pos_menu1 = driver.find_element(By.XPATH, "/html/body/div[6]/div[1]")  # 下拉菜单
+    btn_Pos_menu2 = btn_Pos_menu1.find_elements(By.TAG_NAME, "li")  # 下拉菜单中，列出所有的菜单行
+    b_china = False
+    for e_text in btn_Pos_menu2:
+        btn_span2_2 = e_text.find_element(By.TAG_NAME, "span")  # 定位到菜单行中国
+        if btn_span2_2.text == "中国":
+            b_china = True
+            e_text.click()
+            break
+        else:
+            continue
+    if b_china == False:
+        print("Error:中国地区不存在")
+        driver.close()
+        return -20000 - StartPage  # 2万表示错误编号，StartPage是要重启的页面
+    time.sleep(SetBaseDelayTm)
+
+
+
+
+
+
+    ##########################################
+    # 下面这段是通过【热点区域】选中国，请保留
+    ##########################################
+    # btn_Pos = driver.find_element(By.XPATH,
+    #                               "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[2]")  # 点选位置框
+    #
+    # btn_area3s = btn_Pos.find_elements(By.TAG_NAME, "a")  # 找到位置选择菜单
+    #
+    # b_china = False
+    # for e_text in btn_area3s:
+    #
+    #     btn_span = e_text.find_element(By.TAG_NAME, "span")  # 找到位置选择菜单
+    #     span_html = btn_span.get_attribute("outerHTML")
+    #     print(span_html)
+    #
+    #     if "中国" in span_html:
+    #         e_text.click()
+    #         b_china = True
+    #         break
+    #     else:
+    #         continue
+    #
+    # if b_china == False:
+    #     print("Error:中国地区不存在")
+    #     driver.close()
+    #     return -1
+    #
+    # time.sleep(SetBaseDelayTm)
+    ##########################################
 
     #搜索
     btn_search = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[2]/div[3]/div[9]/div[1]/div[1]")
@@ -214,7 +253,7 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDel
             driver.close()
             return i_page
 
-
+        #################################
         #正式开始循环扫描
         cnt = 0
         for e in List_elements:
