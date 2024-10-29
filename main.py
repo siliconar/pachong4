@@ -20,6 +20,9 @@ def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDela
             new_startpage = abs(res)-20000
             res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, new_startpage)
             continue
+        elif res==-30000: #如果是因为没数据，那么单独标记出来
+            logging.error("因单日无数据失败，不重启")
+            break;
 
         elif res<0:  #如果有其他报错，直接退出
             break
@@ -35,7 +38,7 @@ def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDela
         print(SetSearchDate + "完成！！")
         return 0
     else:
-        return -1
+        return res
 
 
 #把日期间隔，生成一连串的日期
@@ -67,21 +70,21 @@ Tasks_List = []  #建立任务列表
 
 # 卫星选择 ZY1E ZY1dF GF5B GF5A
 # task0 = SearchTask('ZY1F', '2024-09-01',  '2024-06-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task1 = SearchTask('GF5A', '2024-09-01',  '2024-09-15')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task2 = SearchTask('GF5B', '2024-09-01',  '2024-09-15')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task3 = SearchTask('ZY1E', '2024-09-01',  '2024-09-15')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task4 = SearchTask('ZY1F', '2024-09-02',  '2024-09-15')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task1 = SearchTask('GF5A', '2024-09-24',  '2024-09-24')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task2 = SearchTask('GF5B', '2024-09-16',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task3 = SearchTask('ZY1E', '2024-09-16',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task4 = SearchTask('ZY1F', '2024-09-21',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 
 # Tasks_List.append(task0)
 # Tasks_List.append(task1)
 # Tasks_List.append(task2)
 # Tasks_List.append(task3)
-# Tasks_List.append(task4)
+Tasks_List.append(task4)
 
-task6 = SearchTask('GF5A', '2024-03-03',  '2024-03-14')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task7 = SearchTask('GF5B', '2024-03-01',  '2024-03-14')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task8 = SearchTask('ZY1E', '2024-03-01',  '2024-03-14')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task9 = SearchTask('ZY1F', '2024-03-01',  '2024-03-14')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task6 = SearchTask('GF5A', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task7 = SearchTask('GF5B', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task8 = SearchTask('ZY1E', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task9 = SearchTask('ZY1F', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
 Tasks_List.append(task6)
 Tasks_List.append(task7)
 Tasks_List.append(task8)
@@ -117,9 +120,15 @@ for e_task in Tasks_List:
 
         res_1d = RunOneDay(i_date, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, 1)
         if res_1d!=0:
-            ErrorList.append(SetSatID+" "+i_date)  #记录下来这个错误
-            print("单日不成功: " + SetSatID+" "+i_date)
-            logging.error("单日不成功: " + SetSatID+" "+i_date)
+            if res_1d == -30000:
+                ErrorList.append(SetSatID + " " + i_date + ":单日无数据")  # 记录下来这个错误
+                print("单日无数据: " + SetSatID + " " + i_date)
+                logging.error("单日无数据:: " + SetSatID + " " + i_date)
+            else:
+                ErrorList.append(SetSatID + " " + i_date)  # 记录下来这个错误
+                print("单日不成功: " + SetSatID + " " + i_date)
+                logging.error("单日不成功: " + SetSatID + " " + i_date)
+
     #end for i_date in date_list:
 #end for e_task in Tasks_List:
 

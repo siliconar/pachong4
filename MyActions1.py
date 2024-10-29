@@ -209,7 +209,7 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDel
     if TotalFrames <= 0:   # 如果景太少了，那么就推出
         print("Error: No frames, Plz contact Bobby Sun")
         driver.close()
-        return -1
+        return -30000
 
     #更改到每页显示100景
     # btn_100drop = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[11]/div[1]/div/div/div[2]/div/div[3]/div[3]/div[2]")
