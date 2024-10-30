@@ -6,10 +6,10 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 
 #跑1天,带重启
-def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, StartPage):
+def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFilePath, SetBaseDelayTm, StartPage):
 
     #不带出错重新执行的跑1天,如果某页断连，这个函数是不管的，会在下面的代码重启，返回值表示哪个页面需要重启
-    res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, StartPage)
+    res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath,SetAreaFilePath, SetBaseDelayTm, StartPage)
 
 
     #判定是否完成
@@ -18,7 +18,7 @@ def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDela
         if res<-20000 and res>-30000:   # 如果有错，但是中国不存在，错误
             logging.error("中国不存在发生，重启")
             new_startpage = abs(res)-20000
-            res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, new_startpage)
+            res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFilePath, SetBaseDelayTm, new_startpage)
             continue
         elif res==-30000: #如果是因为没数据，那么单独标记出来
             logging.error("因单日无数据失败，不重启")
@@ -29,7 +29,7 @@ def RunOneDay(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDela
 
         elif res>0:  #返回值>0，说明要重新执行第res页，因此重新执行
             new_startpage = res
-            res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, new_startpage)
+            res = MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFilePath, SetBaseDelayTm, new_startpage)
             continue
 
 
@@ -73,32 +73,52 @@ Tasks_List = []  #建立任务列表
 # task1 = SearchTask('GF5A', '2024-09-24',  '2024-09-24')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # task2 = SearchTask('GF5B', '2024-09-16',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # task3 = SearchTask('ZY1E', '2024-09-16',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task4 = SearchTask('ZY1F', '2024-09-21',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task4 = SearchTask('ZY1F', '2024-09-21',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 
 # Tasks_List.append(task0)
 # Tasks_List.append(task1)
 # Tasks_List.append(task2)
 # Tasks_List.append(task3)
-Tasks_List.append(task4)
+# Tasks_List.append(task4)
 
-task6 = SearchTask('GF5A', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task7 = SearchTask('GF5B', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task8 = SearchTask('ZY1E', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task9 = SearchTask('ZY1F', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
-Tasks_List.append(task6)
-Tasks_List.append(task7)
-Tasks_List.append(task8)
-Tasks_List.append(task9)
+# task6 = SearchTask('GF5A', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task7 = SearchTask('GF5B', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task8 = SearchTask('ZY1E', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task9 = SearchTask('ZY1F', '2024-02-15',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# Tasks_List.append(task6)
+# Tasks_List.append(task7)
+# Tasks_List.append(task8)
+# Tasks_List.append(task9)
+
+#从这里开始，我们要把原来的重新扫一遍，为了全球数据。  我们要扫03-01到9月30所有数据
+task11 = SearchTask('GF5A', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task12 = SearchTask('GF5B', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task13 = SearchTask('ZY1E', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task14 = SearchTask('ZY1F', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+Tasks_List.append(task11)
+Tasks_List.append(task12)
+Tasks_List.append(task13)
+Tasks_List.append(task14)
+
+
+
 
 #----------- 系统基础设置
 SetBaseDelayTm = 3  # 基础延时时间
 SetBaseFolder = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
 SetChromePath = "C:/Users/Administrator/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
 SetLogPath = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
+SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong4/custom.zip"
+
 # SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
 # SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
 # SetLogPath = "C:/Users/bobby/Desktop/sun04/SaveImg/"
+# SetAreaFilePath ="C:/Users/bobby/Desktop/sun04/pachong4/custom.zip"
 
+# SetBaseFolder = "C:/Users/SITP/Desktop/sun04/SaveImg/"
+# SetChromePath = "C:/Users/SITP/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
+# SetLogPath = "C:/Users/SITP/Desktop/sun04/SaveImg/"
+# SetAreaFilePath ="C:/Users/SITP/Desktop/sun04/pachong4/custom.zip"
 
 #---------- 自动设置日志
 LogName = SetLogPath+"Log_"+datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".log"
@@ -118,7 +138,7 @@ for e_task in Tasks_List:
         logging.info("==================")
         logging.info("开始下载: "+SetSatID+" "+i_date)
 
-        res_1d = RunOneDay(i_date, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, 1)
+        res_1d = RunOneDay(i_date, SetSatID, SetBaseFolder, SetChromePath, SetAreaFilePath,SetBaseDelayTm, 1)
         if res_1d!=0:
             if res_1d == -30000:
                 ErrorList.append(SetSatID + " " + i_date + ":单日无数据")  # 记录下来这个错误

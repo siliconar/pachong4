@@ -21,11 +21,13 @@ from PIL import Image, ImageGrab
 # from bs4 import BeautifulSoup
 
 
-
+# 实在懒得传参了，就写这里把
+# SetStockPath = 'C:/Users/SITP/Desktop/sun04/重要文件/'
+SetStockPath = 'D:/重要误删-软件重要数据/SaveImg/'
 
 # SetSearchDate  搜索哪天的日期
 # SetSatID  卫星ID
-def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDelayTm, StartPage=1):
+def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFilePath, SetBaseDelayTm, StartPage=1):
 
 
     #------------常量设置
@@ -129,37 +131,62 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDel
     # time.sleep(SetBaseDelayTm)
 
     #地点选择
-    ## 先点击一下
-    btn_Pos_input = driver.find_element(By.XPATH,
-                                  "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]")  # 位置输入框
-    btn_Pos_input.click()
-    time.sleep(SetBaseDelayTm)
-    ## 然后输入2次中国，在不同层级
-    btn_Pos_input_real = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]/div/div[2]/div[1]/input")  # 找到位置选择菜单
-    btn_Pos_input_real.send_keys("中国")
-    btn_Pos_input_real = btn_Pos_input.find_element(By.TAG_NAME, "input")  # 找到位置选择菜单
-    btn_Pos_input_real.send_keys("中国")
 
-    time.sleep(SetBaseDelayTm)
 
-    ## 在下拉菜单中，找到中国
-    btn_Pos_menu1 = driver.find_element(By.XPATH, "/html/body/div[6]/div[1]")  # 下拉菜单
-    btn_Pos_menu2 = btn_Pos_menu1.find_elements(By.TAG_NAME, "li")  # 下拉菜单中，列出所有的菜单行
-    b_china = False
-    for e_text in btn_Pos_menu2:
-        btn_span2_2 = e_text.find_element(By.TAG_NAME, "span")  # 定位到菜单行中国
-        if btn_span2_2.text == "中国":
-            b_china = True
-            e_text.click()
-            break
-        else:
-            continue
-    if b_china == False:
-        print("Error:中国地区不存在")
-        driver.close()
-        return -20000 - StartPage  # 2万表示错误编号，StartPage是要重启的页面
+    ## 点击自定义区域
+    btn_custom = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[1]/div/div/div/div[3]")
+    btn_custom.click()
+    time.sleep(SetBaseDelayTm)
+    ## 点击用户上传区域
+    btn_custom_upload = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[2]/div/div[3]/div[3]")
+    btn_custom_upload.click()
+    time.sleep(SetBaseDelayTm)
+    ## 直接上传
+    btn_custom_input = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[3]/div[1]/div[2]/div[1]/div/input")
+    # btn_custom_input.send_keys("C:/Users/SITP/Desktop/sun04/custom.zip")
+    btn_custom_input.send_keys(SetAreaFilePath)
+    time.sleep(SetBaseDelayTm+3)
+    ## 点击确定
+    btn_custom_confirm = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[3]/div[2]/i[2]")
+    btn_custom_confirm.click()
     time.sleep(SetBaseDelayTm)
 
+
+    ##########################################
+    # 下面这段是通过【输入中国】选中国，请保留
+    ##########################################
+    #
+    # ## 先点击一下
+    # btn_Pos_input = driver.find_element(By.XPATH,
+    #                               "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]")  # 位置输入框
+    # btn_Pos_input.click()
+    # time.sleep(SetBaseDelayTm)
+    # ## 然后输入2次中国，在不同层级
+    # btn_Pos_input_real = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[9]/div[2]/div[3]/div[8]/div/div[2]/div[1]/div[1]/div/div[2]/div[1]/input")  # 找到位置选择菜单
+    # btn_Pos_input_real.send_keys("中国")
+    # btn_Pos_input_real = btn_Pos_input.find_element(By.TAG_NAME, "input")  # 找到位置选择菜单
+    # btn_Pos_input_real.send_keys("中国")
+    #
+    # time.sleep(SetBaseDelayTm)
+    #
+    # ## 在下拉菜单中，找到中国
+    # btn_Pos_menu1 = driver.find_element(By.XPATH, "/html/body/div[6]/div[1]")  # 下拉菜单
+    # btn_Pos_menu2 = btn_Pos_menu1.find_elements(By.TAG_NAME, "li")  # 下拉菜单中，列出所有的菜单行
+    # b_china = False
+    # for e_text in btn_Pos_menu2:
+    #     btn_span2_2 = e_text.find_element(By.TAG_NAME, "span")  # 定位到菜单行中国
+    #     if btn_span2_2.text == "中国":
+    #         b_china = True
+    #         e_text.click()
+    #         break
+    #     else:
+    #         continue
+    # if b_china == False:
+    #     print("Error:中国地区不存在")
+    #     driver.close()
+    #     return -20000 - StartPage  # 2万表示错误编号，StartPage是要重启的页面
+    # time.sleep(SetBaseDelayTm)
+    ##########################################
 
 
 
@@ -289,6 +316,20 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetBaseDel
                 new_folder_name = BaseFolder + SceneID + "/"  #新目录的名字
                 os.makedirs(new_folder_name, exist_ok=True)
                 metafile_path = os.path.join(new_folder_name, "meta.txt")   #新meta的名字
+
+                # 判断这景数据是否存过了，也就是在Stock是否存在？
+                meta_Stock_full = SetStockPath + SetSatID + "/" + SetSearchDate + "/" +SceneID + "/meta.txt"  #在stock文件夹的位置，Stock是每天下载爬虫数据会被手动放置在硬盘某个地方，大概率是D:/重要文件
+                if os.path.exists(meta_Stock_full):
+                    print("已经存在："+meta_Stock_full+"，因此略过该景")
+                    # 关闭图像窗体
+                    btn_close_img = driver.find_element(By.XPATH,
+                                                        "/html/body/div[1]/div/div[11]/div[10]/div/div[2]/div/div[1]/div[4]")
+                    btn_close_img.click()
+                    # 计数器累加
+                    cnt = cnt + 1
+                    time.sleep(SetBaseDelayTm)
+                    continue
+
                 # 将字符串数组写入txt文件
                 with open(metafile_path, 'w', encoding='utf-8') as file:
                     for line in strArray_meta:
