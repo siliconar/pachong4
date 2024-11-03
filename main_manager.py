@@ -68,6 +68,7 @@ class ScriptManager:
                 future = executor.submit(self._run_task, func, args)
                 # self.results[func.__name__] = future
                 self.results["["+args[1]+":"+ args[0]+"]"] = future
+                time.sleep(18)
 
 
     def get_results(self):
