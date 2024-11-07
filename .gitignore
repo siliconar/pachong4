@@ -12,8 +12,10 @@ packages/
 *.suo  
 *.user  
 *.sln.docstates  
+**/__pycache__/
 chromedriver_win64/
-  
+
+
 # Build results  
 [Dd]ebug/  
 [Rr]elease/  

@@ -110,15 +110,15 @@ SetBaseDelayTm = 3  # 基础延时时间
 # SetLogPath = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
 # SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong4/custom.zip"
 
-# SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
-# SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
-# SetLogPath = "C:/Users/bobby/Desktop/sun04/SaveImg/"
-# SetAreaFilePath ="C:/Users/bobby/Desktop/sun04/pachong4/custom.zip"
+SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
+SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong5/chromedriver_win64/chromedriver.exe"
+SetLogPath = "C:/Users/bobby/Desktop/sun04/SaveImg/"
+SetAreaFilePath ="C:/Users/bobby/Desktop/sun04/pachong5/custom.zip"
 
-SetBaseFolder = "C:/Users/SITP/Desktop/sun04/SaveImg/"
-SetChromePath = "C:/Users/SITP/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
-SetLogPath = "C:/Users/SITP/Desktop/sun04/SaveImg/"
-SetAreaFilePath ="C:/Users/SITP/Desktop/sun04/pachong4/custom.zip"
+# SetBaseFolder = "C:/Users/SITP/Desktop/sun04/SaveImg/"
+# SetChromePath = "C:/Users/SITP/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
+# SetLogPath = "C:/Users/SITP/Desktop/sun04/SaveImg/"
+# SetAreaFilePath ="C:/Users/SITP/Desktop/sun04/pachong4/custom.zip"
 
 #---------- 自动设置日志
 LogName = SetLogPath+"Log_"+datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".log"

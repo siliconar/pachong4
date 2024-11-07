@@ -96,6 +96,12 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFil
     time.sleep(SetBaseDelayTm)
 
 
+    #云含量选择
+    btn_cloud = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[2]/div[3]/div[6]/div[1]/div/span/input")
+    btn_cloud.send_keys("100")
+    time.sleep(SetBaseDelayTm)
+
+
     #时间选择
     btn_date = driver.find_element(By.XPATH,"/html/body/div[1]/div/div[9]/div[2]/div[3]/div[4]")
     btn_date.click()

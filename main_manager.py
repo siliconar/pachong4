@@ -68,7 +68,7 @@ class ScriptManager:
                 future = executor.submit(self._run_task, func, args)
                 # self.results[func.__name__] = future
                 self.results["["+args[1]+":"+ args[0]+"]"] = future
-                time.sleep(18)
+                time.sleep(15)  #每隔15秒才能启动下一个任务
 
 
     def get_results(self):
@@ -132,16 +132,18 @@ SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong4/custom.zip"
 SearchTask = namedtuple('SearchTask', ['SatID','StartDate', 'EndDate'])  #建立搜索任务结构体
 Tasks_List = []  #建立任务列表
 
+# task1 = SearchTask('GF5A', '2024-08-02',  '2024-08-02')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# Tasks_List.append(task1)
 
 #从这里开始，我们要把原来的重新扫一遍，为了全球数据。  我们要扫03-01到9月30所有数据
-task11 = SearchTask('GF5A', '2024-03-14',  '2024-03-31')  #第一个搜索任务，注意，起始和结束日期都是包含的
+
 # task11 = SearchTask('GF5A', '2024-03-14',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # task12 = SearchTask('GF5B', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task13 = SearchTask('ZY1E', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task13 = SearchTask('ZY1E', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # task14 = SearchTask('ZY1F', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-Tasks_List.append(task11)
+# Tasks_List.append(task11)
 # Tasks_List.append(task12)
-# Tasks_List.append(task13)
+Tasks_List.append(task13)
 # Tasks_List.append(task14)
 
 
@@ -178,7 +180,7 @@ if __name__ == "__main__":
 
 
 
-    manager = ScriptManager(max_workers=3, max_retries=3, check_output=check_output)
+    manager = ScriptManager(max_workers=8, max_retries=20, check_output=check_output)
 
     # 添加任务
 
