@@ -68,7 +68,7 @@ class ScriptManager:
                 future = executor.submit(self._run_task, func, args)
                 # self.results[func.__name__] = future
                 self.results["["+args[1]+":"+ args[0]+"]"] = future
-                time.sleep(15)  #每隔15秒才能启动下一个任务
+                time.sleep(20)  #每隔15秒才能启动下一个任务
 
 
     def get_results(self):
@@ -139,12 +139,12 @@ Tasks_List = []  #建立任务列表
 
 # task11 = SearchTask('GF5A', '2024-03-14',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # task12 = SearchTask('GF5B', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-task13 = SearchTask('ZY1E', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
-# task14 = SearchTask('ZY1F', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task13 = SearchTask('ZY1E', '2024-03-01',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
+task14 = SearchTask('ZY1F', '2024-03-12',  '2024-09-30')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # Tasks_List.append(task11)
 # Tasks_List.append(task12)
-Tasks_List.append(task13)
-# Tasks_List.append(task14)
+# Tasks_List.append(task13)
+Tasks_List.append(task14)
 
 
 #### 使用示例
