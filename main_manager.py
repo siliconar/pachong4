@@ -112,9 +112,9 @@ SetBaseDelayTm = 3  # 基础延时时间
 
 # 南通
 SetBaseFolder = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
-SetChromePath = "C:/Users/Administrator/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
+SetChromePath = "C:/Users/Administrator/Desktop/sun04/pachong5/chromedriver_win64/chromedriver.exe"
 SetLogPath = "C:/Users/Administrator/Desktop/sun04/SaveImg/"
-SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong4/custom.zip"
+SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong5/custom.zip"
 
 # 家里
 # SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
