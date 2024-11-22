@@ -118,9 +118,9 @@ SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong5/custom.zip"
 
 # 家里
 # SetBaseFolder = "C:/Users/bobby/Desktop/sun04/SaveImg/"
-# SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong4/chromedriver_win64/chromedriver.exe"
+# SetChromePath = "C:/Users/bobby/Desktop/sun04/pachong5/chromedriver_win64/chromedriver.exe"
 # SetLogPath = "C:/Users/bobby/Desktop/sun04/SaveImg/"
-# SetAreaFilePath ="C:/Users/bobby/Desktop/sun04/pachong4/custom.zip"
+# SetAreaFilePath ="C:/Users/bobby/Desktop/sun04/pachong5/custom.zip"
 
 # 办公室
 # SetBaseFolder = "C:/Users/SITP/Desktop/sun04/SaveImg/"
@@ -132,8 +132,17 @@ SetAreaFilePath ="C:/Users/Administrator/Desktop/sun04/pachong5/custom.zip"
 SearchTask = namedtuple('SearchTask', ['SatID','StartDate', 'EndDate'])  #建立搜索任务结构体
 Tasks_List = []  #建立任务列表
 
-# task1 = SearchTask('GF5A', '2024-08-02',  '2024-08-02')  #第一个搜索任务，注意，起始和结束日期都是包含的
+
+# task1 = SearchTask('ZY1F', '2024-08-31',  '2024-08-31')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task2 = SearchTask('ZY1F', '2024-09-05',  '2024-09-05')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task3 = SearchTask('ZY1F', '2024-01-24',  '2024-01-24')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task4 = SearchTask('ZY1F', '2024-01-26',  '2024-01-31')  #第一个搜索任务，注意，起始和结束日期都是包含的
+# task5 = SearchTask('ZY1F', '2024-02-03',  '2024-02-29')  #第一个搜索任务，注意，起始和结束日期都是包含的
 # Tasks_List.append(task1)
+# Tasks_List.append(task2)
+# Tasks_List.append(task3)
+# Tasks_List.append(task4)
+# Tasks_List.append(task5)
 
 #从这里开始，我们要把原来的重新扫一遍，为了全球数据。  我们要扫03-01到9月30所有数据
 

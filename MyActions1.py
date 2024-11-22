@@ -287,17 +287,34 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFil
                 driver.close()
                 return i_page
 
+
             #################################
             #正式开始循环扫描
             cnt = 0
             for e in List_elements:
                 try:
-            #    e.click()
+
+                    # 把这个元素挪到可视范围内
                     driver.execute_script("arguments[0].scrollIntoView();", e)
                     time.sleep(SetBaseDelayTm+2)
                     actions.move_to_element(e).perform()  # 移动到这个东西上
                     time.sleep(SetBaseDelayTm+2)
 
+
+                    # -- 判断这个元素是否是已经存储的
+                    btn_jinghao1= e.find_element(By.CLASS_NAME, "el-table_3_column_10  ")
+                    btn_jinghao2 = btn_jinghao1.find_element(By.XPATH, ".//div/div[2]/div[2]/label[2]")
+                    str_SceneID1 = btn_jinghao2.text
+
+                    # 判断这景数据是否存过了，也就是在Stock是否存在？
+                    meta_Stock_full = SetStockPath + SetSatID + "/" + SetSearchDate + "/" + str_SceneID1 + "/meta.txt"  # 在stock文件夹的位置，Stock是每天下载爬虫数据会被手动放置在硬盘某个地方，大概率是D:/重要文件
+                    if os.path.exists(meta_Stock_full):
+                        print("已经存在：" + meta_Stock_full + "，因此略过该景")
+                        # 计数器累加
+                        cnt = cnt + 1
+                        continue
+
+                    # -- 走到这里说明这个元素是新的
                     #找到中间感叹号
                     btn_gantanhao = e.find_element(By.CLASS_NAME,"caozuo.clearfix")
                     btn_gantanhao.click()
@@ -324,18 +341,7 @@ def MyActions1(SetSearchDate, SetSatID, SetBaseFolder, SetChromePath, SetAreaFil
                     os.makedirs(new_folder_name, exist_ok=True)
                     metafile_path = os.path.join(new_folder_name, "meta.txt")   #新meta的名字
 
-                    # 判断这景数据是否存过了，也就是在Stock是否存在？
-                    meta_Stock_full = SetStockPath + SetSatID + "/" + SetSearchDate + "/" +SceneID + "/meta.txt"  #在stock文件夹的位置，Stock是每天下载爬虫数据会被手动放置在硬盘某个地方，大概率是D:/重要文件
-                    if os.path.exists(meta_Stock_full):
-                        print("已经存在："+meta_Stock_full+"，因此略过该景")
-                        # 关闭图像窗体
-                        btn_close_img = driver.find_element(By.XPATH,
-                                                            "/html/body/div[1]/div/div[11]/div[10]/div/div[2]/div/div[1]/div[4]")
-                        btn_close_img.click()
-                        # 计数器累加
-                        cnt = cnt + 1
-                        time.sleep(SetBaseDelayTm)
-                        continue
+
 
                     # 将字符串数组写入txt文件
                     with open(metafile_path, 'w', encoding='utf-8') as file:
